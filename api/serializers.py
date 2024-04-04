@@ -7,3 +7,6 @@ class TaskSerializer(serializers.Serializer):
     completed = serializers.BooleanField()
     description = serializers.CharField()
     created_at = serializers.DateTimeField()
+    def create(self):
+        print('Create form data')
+        return {}

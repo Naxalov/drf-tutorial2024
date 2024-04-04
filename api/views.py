@@ -3,6 +3,7 @@ from django.views import View
 
 from django.http import HttpResponse,JsonResponse
 from rest_framework import request
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -11,7 +12,7 @@ from .serializers import TaskSerializer
 from .models import Task
 # Create your views here.
 
-class Index(View):
+class Index(APIView):
     def get(self, request):
         task = Task.objects.first()
         serializer = TaskSerializer(task)
@@ -19,9 +20,17 @@ class Index(View):
         return JsonResponse(data)
 
 
-class AddTask(View):
+class AddTask(APIView):
     def post(self, request):
-        return HttpResponse("Hello, world. You're at the polls index.")
+        # Get post data from request
+        data = request.data
+        # Serialize data
+        serializer = TaskSerializer(data=data)
+
+        print(serializer.create())
+     
+        
+        return HttpResponse("1")
     
 
 @api_view(['GET'])
